@@ -1,4 +1,6 @@
 const fs = require("node:fs");
+
+
 fs.readFile("FirstURL.json", (err,data)=>{
     if(err===null){
         //console.log(data.toString());
@@ -13,6 +15,9 @@ fs.readFile("FirstURL.json", (err,data)=>{
             fs.writeFile(`output${index}.txt`,textToWrite,"utf8", (err)=>{
                 if(err===null){
                     console.log("The file has been saved");
+                    if(index === 2){
+                      mergeFiles();
+                    }
                 }else{
                     console.log(err);
                 }
@@ -24,6 +29,26 @@ fs.readFile("FirstURL.json", (err,data)=>{
     }
     
 });
+
+/*function checkAndMergeFile() {
+  fs.readFile("output.txt", "utf8", (err, data) => {
+    if (err === null) {
+        // Розділити текст на рядки та видалити порожні рядки
+        const lines = data.split("\n").filter(Boolean);
+        if(lines.length !== 4){
+          mergeFiles(() => {
+            // Після злиття перевіряємо файл ще раз
+            checkAndMergeFile();
+          });
+        }
+        
+    } else {
+        console.log(err);
+    }
+});
+}*/
+
+function mergeFiles(callback) {
 fs.writeFile("output.txt", "", "utf8", (err) => { //створення або перезапис файлу "output.txt" з вмістом ""
   
     if(err===null){
@@ -44,8 +69,10 @@ fs.writeFile("output.txt", "", "utf8", (err) => { //створення або п
               }
             });
           }
+          
     }
     else{
         console.log(err);
     }
   });
+}
